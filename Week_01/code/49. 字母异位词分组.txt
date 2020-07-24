@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>>res;
+        int n = strs.size();
+        if( n <= 0){
+            return res;
+        }
+        map<string,vector<string>>hash;
+        for(int i = 0;i<n;++i){
+            string s = strs[i];
+            sort(strs[i].begin(),strs[i].end());
+            hash[strs[i]].push_back(s);
+        }
+        for(auto i_h = hash.begin();i_h != hash.end();++i_h){
+            sort(i_h->second.begin(),i_h->second.end());
+            res.push_back(i_h->second);
+        }
+        sort(res.begin(),res.end(),com);
+        return res;   
+    }
+    static bool com(vector<string>s1,vector<string>s2){
+        return s1.size() < s2.size();
+    }
+};

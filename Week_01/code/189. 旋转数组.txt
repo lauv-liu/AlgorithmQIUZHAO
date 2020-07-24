@@ -1,0 +1,25 @@
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int n = nums.size();
+        if(n <= 0){
+            return;
+        }
+        deque<int>p;
+        k = k % n;
+        for(int i = 0;i<n;++i){
+            p.push_front(nums[i]);
+        } 
+        for(int i = 0;i<k;++i){
+            int temp = p.front();
+            p.pop_front();
+            p.push_back(temp);
+        } 
+        for(int i = 0;i<n;++i){
+            int temp = p.back();
+            p.pop_back();
+            nums[i] = temp;
+        }    
+        return;  
+    }
+};
