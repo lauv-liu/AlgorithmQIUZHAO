@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<vector<int>>res;
+    vector<int>temp;
+    vector<vector<int>> subsets(vector<int>& nums) {
+        int n = nums.size();
+        getChildren(nums,0,n-1);
+        return res;
+
+    }
+    void getChildren(vector<int>& nums,int left,int right){
+        if(left > right){
+            res.push_back(temp);
+            return;
+        }
+        getChildren(nums,left+1,right);
+        temp.push_back(nums[left]);
+        getChildren(nums,left+1,right);
+        temp.pop_back();
+    }
+};
