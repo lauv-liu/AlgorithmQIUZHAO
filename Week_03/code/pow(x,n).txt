@@ -1,0 +1,34 @@
+class Solution {
+public:
+    double res; 
+    double myPow(double x, int n) {
+        if(n >= 0){
+            return pow(x,n);
+        }
+        else{
+            n = abs(n);
+            return  1.0 / pow(x,n);
+        }
+
+    }       
+    double pow(double x,long long n){
+         if(n == 0){
+            return 1.0;
+        }
+        if(x == 1){
+            return x;
+        }
+        if(n == 1){
+            return x;
+        }
+        double temp = pow(x,n/2);
+        if(n % 2 == 1){
+            res = temp*temp*x;
+        }
+        else{
+            res = temp*temp;
+        }
+        return res;
+    }
+        
+};

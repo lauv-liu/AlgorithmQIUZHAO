@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int T[8][2] = {{1,0},{-1,0},{0,-1},{0,1},{1,1},{1,-1},{-1,1},{-1,-1}};
+    vector<vector<char>> updateBoard(vector<vector<char>>& board, vector<int>& click) {
+        int x = click[0];
+        int y = click[1];
+        int n = board.size();
+        if(n <= 0){
+            return board;
+        }
+        int m = board[0].size();
+        if(board[x][y] == 'M' || board[x][y] == 'X'){
+            board[x][y] = 'X';
+            return board;
+        }
+        int num = 0;
+        for(int i = 0;i<8;++i){
+            int nx = x + T[i][0];
+            int ny = y + T[i][1];
+            if(nx >= 0 && ny >= 0 && nx < n && ny < m && board[nx][ny] == 'M'){
+                num++;
+            }
+        }            
+        if(num > 0){
+            board[x][y] = (char)(num + '0');
+            return board;
+        }
+        board[x][y] = 'B';
+        for(int i = 0;i<8;++i){
+            int nx = x + T[i][0];
+            int ny = y + T[i][1];
+            if(nx >= 0 && ny >= 0 && nx < n && ny < m && board[nx][ny] == 'E'){
+                vector<int>temp(2,0);
+                temp[0] = nx;
+                temp[1] = ny;
+                board = updateBoard(board,temp);
+            }
+        }
+        return board;
+    }
+};

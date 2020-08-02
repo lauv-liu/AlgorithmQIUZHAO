@@ -1,0 +1,38 @@
+class Solution {
+public:
+    typedef pair<string,int>T;
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        int n = wordList.size();
+        set<string>word;
+        for(int i = 0;i<n;++i){
+            word.insert(wordList[i]);
+        }
+        queue<T>p;
+        string str;
+        int sum;
+        p.push({beginWord,1});
+        while(!p.empty()){
+            if(p.front().first == endWord){
+                return p.front().second;
+            }
+            str = p.front().first;
+            sum = p.front().second;
+            p.pop();
+            for(int i = 0;i<(int)str.size();++i){
+                char ch = str[i];
+                for(char c = 'a';c <= 'z';++c){
+                    if(ch == c){
+                        continue;
+                    }
+                    str[i] = c;
+                    if(word.find(str) != word.end()){
+                        p.push({str,sum+1});
+                        word.erase(str);
+                    }
+                }
+                str[i] = ch;
+            }  
+        }
+        return 0;
+    }
+};
