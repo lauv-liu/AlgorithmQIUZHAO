@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int n = s.size();
+        if(n <= 1){
+            return n;
+        }
+        vector<vector<bool>>dp(n,vector<bool>(n,false));
+        dp[0][0] = true;
+        int res = 1;
+        for(int i = 1;i<n;++i){
+            for(int j = i;j>=0;--j){
+                if(s[i] == s[j] && (i-j<=2 || dp[i-1][j+1])){
+                    dp[i][j] = true;
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+};
