@@ -1,0 +1,49 @@
+class Solution {
+public:
+    int minMutation(string start, string end, vector<string>& bank) {
+        int n = bank.size();
+        if(n <= 0){
+            return -1;
+        }
+        map<string,int>hash;
+        set<string>f_q;
+        set<string>b_q;
+        f_q.insert(start);
+        b_q.insert(end);
+        int res = 0;
+        while(!f_q.empty() && !b_q.empty()){
+            if(f_q.size() > b_q.size()){
+                set<string>temp = f_q;
+                f_q = b_q;
+                b_q = temp;
+            }
+            set<string>temp2;
+            for(auto s : f_q){
+                hash[s] = 1;
+                if(b_q.find(s) != b_q.end()){
+                    return res;
+                } 
+                for(string str : bank){
+                    if(isnum(str,s) == 1 && !hash[str]){
+                        temp2.insert(str);
+                    }
+                }
+            }
+            f_q = temp2;
+            res++;
+        }
+        return -1;;
+    }
+    int isnum(string a,string b){
+        int num = 0;
+        if(a.size() != b.size()){
+            return -1;
+        }
+        for(int i = 0;i<(int)a.size();++i){
+            if(a[i] != b[i]){
+                num++;
+            }
+        }
+        return num;
+    }
+};

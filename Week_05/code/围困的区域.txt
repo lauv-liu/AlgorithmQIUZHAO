@@ -1,0 +1,50 @@
+class Solution {
+public:
+    int x[4] = {0,0,-1,1};
+    int y[4] = {-1,1,0,0};
+    void solve(vector<vector<char>>& board) {
+        int len = board.size();
+        if(len <= 0)
+        {
+            return;
+        }
+        int len2 = board[0].size(); 
+        if(len2 <= 0)
+        {
+            return;
+        }
+        vector<vector<char>>temp(len+2,vector<char>(len2+2,'O'));
+        vector<vector<bool>>dp(len+2,vector<bool>(len2+2,false));
+        for(int i = 0;i<len;i++)
+        {
+            for(int j = 0;j<len2;j++)
+            {
+                temp[i+1][j+1] = board[i][j];
+            }
+        }
+        dfs(temp,dp,len+2,len2+2,0,0);
+        for(int i = 0;i<len;i++)
+        {
+            for(int j = 0;j<len2;j++)
+            {
+                if(board[i][j] == 'O' && dp[i+1][j+1] == false)
+                {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+    }
+    void dfs(vector<vector<char>> &temp,vector<vector<bool>>&dp,int len,int len2,int dx,int dy)
+    {
+        dp[dx][dy] = true;
+        for(int i = 0;i<4;i++)
+        {
+            int nx = dx + x[i];
+            int ny = dy + y[i];
+            if(nx >= 0 && nx < len && ny >= 0 && ny < len2 && !dp[nx][ny] && temp[nx][ny] == 'O')
+            {
+                dfs(temp,dp,len,len2,nx,ny);
+            }
+        }
+    }
+};

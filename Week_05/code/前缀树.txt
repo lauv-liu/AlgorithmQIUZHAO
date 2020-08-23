@@ -1,0 +1,51 @@
+class Trie {
+public:
+    struct TrieNode{
+        map<char,TrieNode*>child;
+        int end;
+        TrieNode():end(0){}
+    };
+    /** Initialize your data structure here. */
+    Trie() {
+        root = new TrieNode();
+    }
+    
+    /** Inserts a word into the trie. */
+    void insert(string word) {
+        TrieNode *curr = root;
+        for (int i = 0; i < word.size(); i++) {
+            if (curr->child.count(word[i]) == 0)
+                curr->child[word[i]] = new TrieNode();
+                
+            curr = curr->child[word[i]];                
+        }
+        curr->end = 1;
+    }
+    
+    /** Returns if the word is in the trie. */
+    bool search(string word) {
+        return find(word,1);
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+        return find(prefix,0);
+    }
+private:
+    TrieNode* root;
+    bool find(string str,int e){
+        TrieNode* node = root;
+        for(char s : str){
+            if(node->child.count(s) == 0){
+                return false;
+            }
+            node = node->child[s];
+        }
+        if(e == 1){
+            return node->end == 1;
+        }
+        else{
+            return true;
+        }
+    }
+};

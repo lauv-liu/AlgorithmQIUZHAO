@@ -1,0 +1,31 @@
+class Solution {
+public:
+    bool isValidSudoku(vector<vector<char>>& board) {
+        int n = board.size();
+        int m = board[0].size();
+        vector<vector<bool>>l_dp(n,vector<bool>(m+1,false));
+        vector<vector<bool>>h_dp(n,vector<bool>(m+1,false));
+        vector<vector<bool>>g_dp(n,vector<bool>(m+1,false));
+        for(int i = 0;i<n;i++){
+            for(int j = 0;j<m;j++){
+                if(board[i][j] == '.'){
+                    continue;
+                }
+                int temp = board[i][j] - '0';
+                if(l_dp[i][temp]){
+                    return false;
+                }
+                if(h_dp[j][temp]){
+                    return false;
+                }
+                if(g_dp[j/3+(i/3)*3][temp]){
+                    return false;
+                }
+                l_dp[i][temp] = true;
+                h_dp[j][temp] = true;
+                g_dp[j/3+(i/3)*3][temp] = true;
+            }
+        }
+        return true;
+    }
+};

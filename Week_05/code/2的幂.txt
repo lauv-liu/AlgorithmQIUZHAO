@@ -1,0 +1,11 @@
+class Solution {
+public:
+    bool isPowerOfTwo(int n) {
+        long long e = n;
+        if(e == 0){
+            return false;
+        }
+        e = e & (e-1);
+        return e == 0;
+    }
+};
