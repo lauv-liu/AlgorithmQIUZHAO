@@ -1,0 +1,40 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        int n = s.size();
+        int m = p.size();
+        vector<int>res;
+        if(m > n || n <= 0 || m <= 0){
+            return res;
+        }
+        map<char,int>hash;
+        map<char,int>hash_s;
+        for(int i = 0;i<m;++i){
+            hash[p[i]]++;
+            hash_s[s[i]]++;
+        }
+        if(isAnagrams(hash_s,hash)){
+            res.push_back(0);
+        }
+        string str;
+        for(int i = 1;i<n-m+1;++i){
+           hash_s[s[i-1]]--;
+           hash_s[s[i+m-1]]++;
+           if(isAnagrams(hash_s,hash)){
+               res.push_back(i);
+           }
+        }
+        return res;
+    }
+    bool isAnagrams(map<char,int>s1,map<char,int>t1){
+        for(auto i_t = t1.begin();i_t != t1.end();++i_t){
+            if(s1[i_t->first] == i_t->second){
+                continue;
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
+    }
+};
